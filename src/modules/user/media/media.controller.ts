@@ -10,10 +10,10 @@ import * as multer from 'multer';
 import * as path from 'path';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MediaService } from './media.service';
 
-@ApiTags('Media')
+@ApiTags('Media upload')
 @Controller('media')
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
@@ -63,5 +63,34 @@ export class MediaController {
   )
   async uploadFilesBuilder(@Response() res, @Request() req) {
     return await this.mediaService.uploadLogic(res, req);
+  }
+
+  @Post('cloudinary/upload/media')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'array',
+          items: {
+            type: 'string',
+            format: 'binary',
+          },
+        },
+      },
+    },
+  })
+  @ApiResponse({ status: 200, description: 'Files uploaded successfully' })
+  @ApiResponse({ status: 500, description: 'Error while uploading files' })
+  @UseInterceptors(
+    AnyFilesInterceptor({
+      limits: {
+        fileSize: 500 * 1024 * 1024,
+      },
+    }),
+  )
+  async uploadOnCloud(@Response() res, @Request() req) {
+    return await this.mediaService.uploadCloudinary(res, req);
   }
 }
