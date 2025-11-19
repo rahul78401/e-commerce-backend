@@ -65,6 +65,7 @@ export class MediaController {
     return await this.mediaService.uploadLogic(res, req);
   }
 
+  //upload on cloudinary [send box]
   @Post('cloudinary/upload/media')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
