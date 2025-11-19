@@ -11,6 +11,7 @@ import { AdminAuthModule } from './modules/admin-modules/admin-auth/admin-auth.m
 import { ConfigModule } from '@nestjs/config';
 import { CategoryAttributesModule } from './modules/admin-modules/category-attributes/category-attributes.module';
 import { MediaModule } from './modules/user/media/media.module';
+import { CouponsModule } from './modules/admin-modules/coupons/coupons.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MediaModule } from './modules/user/media/media.module';
     AdminAuthModule,
     CategoryAttributesModule,
     MediaModule,
+    CouponsModule,
   ],
   controllers: [AppController],
   providers: [
