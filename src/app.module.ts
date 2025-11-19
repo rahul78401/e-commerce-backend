@@ -6,9 +6,21 @@ import { APP_FILTER } from '@nestjs/core';
 import { AllExceptionFilter } from './utils/exceptionFilter.service';
 import { CustomLogger } from './utils/logger.service';
 import { CUSTOM_LOGGER } from './utils/constant';
+import { CategoriesModule } from './modules/admin-modules/categories/categories.module';
+import { AdminAuthModule } from './modules/admin-modules/admin-auth/admin-auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { CategoryAttributesModule } from './modules/admin-modules/category-attributes/category-attributes.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    PrismaModule,
+    CategoriesModule,
+    AdminAuthModule,
+    CategoryAttributesModule
+  ],
   controllers: [AppController],
   providers: [
     AppService,

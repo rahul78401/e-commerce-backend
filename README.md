@@ -84,4 +84,5 @@ API documentation will be available at `/api` when the server is running.
 - `npx prisma studio` - Open Prisma Studio (database GUI)
 - `npx prisma migrate dev` - Run database migrations
 
-**Note**: Remember to follow the project's naming conventions - use camelCase for file names and kebab-case for DTO names.
+**Note**: Remember to follow the project's naming conventions - use camelCase for file names and kebab-case for DTO names. 
+**Notes**: There will be this comment "// ** Things that need to be discussed: ** //" wherever there are things that need to be disccused.

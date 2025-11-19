@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: '*',
   });
-  
+
   app.useGlobalInterceptors(new TransformInterceptor(app.get(Reflector)));
 
   const config = new DocumentBuilder()

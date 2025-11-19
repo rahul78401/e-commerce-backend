@@ -1,14 +1,12 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
   schemas  = ["public", "system_config"]
 }
-
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["multiSchema"]
-}
-
 
 model AdminUser {
   user_id                                                         String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -401,6 +399,7 @@ model Category {
   updated_at                                     DateTime?           @default(now()) @db.Timestamp(6)
   created_by                                     String?             @db.Uuid
   updated_by                                     String?             @db.Uuid
+  is_archived                                    Boolean?            @default(false)
   admin_users_categories_created_byToadmin_users AdminUser?          @relation("categories_created_byToadmin_users", fields: [created_by], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
   media                                          Media?              @relation(fields: [media_id], references: [media_id], onDelete: NoAction, onUpdate: NoAction)
   categories                                     Category?           @relation("categoriesTocategories", fields: [parent_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction)
@@ -418,13 +417,14 @@ model CategoryAttribute {
   attribute_id                                            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   category_id                                             String?            @db.Uuid
   attribute_name                                          String?            @db.VarChar(255)
-  atribute_type                                           String?            @db.VarChar(255)
+  attribute_type                                          String?            @db.VarChar(255)
   display_sequence                                        Int?
   is_required                                             Boolean?           @default(false)
   created_at                                              DateTime?          @default(now()) @db.Timestamp(6)
   updated_at                                              DateTime?          @default(now()) @db.Timestamp(6)
   created_by                                              String?            @db.Uuid
   updated_by                                              String?            @db.Uuid
+  is_archived                                             Boolean?           @default(false)
   categories                                              Category?          @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction)
   admin_users_category_attributes_created_byToadmin_users AdminUser?         @relation("category_attributes_created_byToadmin_users", fields: [created_by], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
   admin_users_category_attributes_updated_byToadmin_users AdminUser?         @relation("category_attributes_updated_byToadmin_users", fields: [updated_by], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
